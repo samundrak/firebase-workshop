@@ -15,6 +15,13 @@ class Application extends Component {
       posts: docs,
     });
   }
+  handleRemove = async (id) => {
+    const allPosts = this.state.posts;
+    console.log(id);
+    await firestore.doc(`posts/${id}`).delete();
+    const posts = allPosts.filter((post) => post.id !== id);
+    this.setState({ posts });
+  };
   handleCreate = async (post) => {
     const { posts } = this.state;
     const docsRef = await firestore.collection('posts').add(post);
@@ -30,7 +37,11 @@ class Application extends Component {
     return (
       <main className="Application">
         <h1>Think Piece</h1>
-        <Posts posts={posts} onCreate={this.handleCreate} />
+        <Posts
+          posts={posts}
+          onCreate={this.handleCreate}
+          onRemove={this.handleRemove}
+        />
       </main>
     );
   }
