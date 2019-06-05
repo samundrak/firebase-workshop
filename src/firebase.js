@@ -20,29 +20,38 @@ export const signinWithGoogle = () => auth.signInWithPopup(provider);
 export const signOut = () => auth.signOut();
 
 export const createUserProfileDocument = async (user, additionalData) => {
-  if (!user) {
-    return;
-  }
+  if (!user) return;
 
-  // get a refernce to the place in the database
+  // Get a reference to the place in the database where a user profile might be.
   const userRef = firestore.doc(`users/${user.uid}`);
 
-  // go and fetch the document from that location
+  // Go and fetch the document from that location.
   const snapshot = await userRef.get();
+
   if (!snapshot.exists) {
-    const { displayName, email, photoURl } = user;
+    const { displayName, email, photoURL } = user;
     const createdAt = new Date();
     try {
       await userRef.set({
         displayName,
         email,
-        photoURl,
+        photoURL,
         createdAt,
         ...additionalData,
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error('Error creating user', error.message);
     }
+  }
+
+  return getUserDocument(user.uid);
+};
+export const getUserDocument = async uid => {
+  if (!uid) return null;
+  try {
+    return firestore.collection('users').doc(uid);
+  } catch (error) {
+    console.error('Error fetching user', error.message);
   }
 };
 export default firebase;
