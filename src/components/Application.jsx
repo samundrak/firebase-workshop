@@ -16,13 +16,14 @@ class Application extends Component {
   async componentDidMount() {
     this.unsubscribeFromFireStore = firestore
       .collection('posts')
-      .onSnapshot((snapshot) => {
+      .onSnapshot(snapshot => {
         const posts = snapshot.docs.map(collectIdsAndDocs);
         this.setState({
           posts,
         });
       });
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      console.log(user);
       this.setState({ user });
     });
   }
