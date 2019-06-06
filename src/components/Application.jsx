@@ -5,6 +5,7 @@ import Posts from './Posts';
 import Authentication from './Authentication';
 import { UserContext } from '../providers/UserProvider';
 import UserProfile from './UserProfile';
+import PostPage from './PostPage';
 
 class Application extends Component {
   state = {
@@ -31,6 +32,7 @@ class Application extends Component {
         <Switch>
           <Route exact path="/" component={Posts} />
           <Route exact path="/profile" component={UserProfile} />
+          <Route exact path="/posts/:id" component={PostPage} />
         </Switch>
       </main>
     );
