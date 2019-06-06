@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBPEOFwNXfwuXV4miO3LPm7jzEe8XxXZ7Y',
@@ -18,6 +19,7 @@ export const auth = firebase.auth();
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const signinWithGoogle = () => auth.signInWithPopup(provider);
 export const signOut = () => auth.signOut();
+export const storage = () => firebase.storage();
 
 export const createUserProfileDocument = async (user, additionalData) => {
   if (!user) return;

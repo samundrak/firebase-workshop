@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
+
 import Posts from './Posts';
 import Authentication from './Authentication';
 import { UserContext } from '../providers/UserProvider';
+import UserProfile from './UserProfile';
 
 class Application extends Component {
   state = {
@@ -18,12 +21,17 @@ class Application extends Component {
     return (
       <main className="Application">
         <h1>Think Piece</h1>
+        <Link to="/">Home</Link>
         <UserContext.Consumer>
           {user => {
             return <Authentication user={user} />;
           }}
         </UserContext.Consumer>
-        <Posts />
+
+        <Switch>
+          <Route exact path="/" component={Posts} />
+          <Route exact path="/profile" component={UserProfile} />
+        </Switch>
       </main>
     );
   }
