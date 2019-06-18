@@ -1,1 +1,2 @@
  .
+Firebase Workshop App
